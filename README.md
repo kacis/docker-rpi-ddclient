@@ -8,3 +8,15 @@ ddclient: http://ddclient.sf.net
 
 ## Build
 [![Build Status](https://travis-ci.org/kacis/docker-rpi-ddclient.svg?branch=release)](https://travis-ci.org/kacis/docker-rpi-ddclient)
+
+## How run for www.noip.com
+### Create config file
+Fill `ddclient.conf-sample`.   
+`<user>` = user name from noip.com   
+`<pass>` = password from noip.com   
+`<domain>` = one or more domains (one domain per line) from noip.com   
+Rename `ddclient.conf-sample` to `ddclient.conf`
+### Run
+```
+docker run -d --name=ddclient -v "$PWD/ddclient.conf:/etc/ddclient/ddclient.conf" kacis/docker-rpi-ddclient
+```
