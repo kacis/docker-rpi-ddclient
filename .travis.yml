@@ -1,24 +1,21 @@
 sudo: required
-
 env:
   global:
   - IMAGE=kacis/docker-rpi-ddclient
   - SNAPSHOT=snapshot
-
+  - secure: LN0fVgoiSRXA8JNZEmVmQlCrh3NWkwbgADHSL4Eo0crp7L5N6+GQ1Wx33HC4Yus42knpA2hE1JAMhYX1LBCbkg70uHVsVvR7cjNWq1mt7ng3vG4Cx1XZmYLPDOhqFtGI4IVlDhPtGb2lPpTIKao9Tjlk4PHj4L5RUqR8vHxhzJ9dz4/dXFtEA8XVpjVHIwWpczm8ZuGyswre9uATMgGRrQg7mhdrz+ikIj7ZTF16SsNjHdBF6Uea8OF4DxFWKOHXxml6dgeDjZTymhlOMxlj5TWAPd5JnG+OUuc5HNmXS9+4GO5sAE1J3+w7Sn+TTSIGdg8N8IPwt2AI+D72vTsf25YJ3MCvAUVdGPxsKHFXJFea8C+dF8mTPH6s0wWplCT8PjcTQpRpSYbyzO9B5JadZhu3dcUffpOefqQlTDl8oNtNfa9nlPYa4Yo6dGY+JCbc8NWqh+Hjq0IWRgmopkDI65R7K33SoyyQKHM/LJGus4bDnvPwit5A4irx7srdUtfxVkU6cwmZQjHC9881umdu6A4Rnz9U2aThm2nX1cLjyyiojYQvKHyjOM8HqJbuwoanXDQaoYVrvGqy7XlelYBry8xaPTgmdZcmTU/oPCl5/3o3wm+NQYamYLaB/bEo8vdj5l9zM7uTPFDj5aIJml7YQebs5zqqvKJYumBvRGyEqpE=
+  - secure: keh5LpQ7NKDVKg3hNtXy2SuOJGBjPaJnYvVbsU1T6sw5CUpAP/xnZIyVyaJAeUDGMOz/R1u96zPfqZYyScoNLgp2Wib5ergSoy0uL3GT7UpLAnZk9m4xfV/cg9ZuOvGmqtoOt5pz1rYyAvK0C7ZQ1YNKge2lvSdKlXjzETzk7A65JYRpyFzxjNAD49e75vqFsJFwVR/WiAYYl/2IUmua/rllOFNxWa9m/PtmwravcIaguAOcIuZJ+in0wQlBC+rXy7WvS0abYafV7A/hHsEIP2w/7c/kyK72qCFyr5+ZGr7wMOnpDYUNEWzSKqRYjtycl9HdS50p3ZoLX+i4fUnu5vJAVK5EKdiFGKVuVAlzNspbzMs+CtvZE5ciFdignLNfZy125RDGpNEqMzg5qQXzveBZINIRrLQWrbEuo+OLkWQJuuvgXzHO/gABiJKbei0+9OtePSFLnD6cNc4sfmdAwq72rrXPaNiuR6LCVX1jEx4dTaLWs9948FMTeyOpiE6d5G2o6XuyFE2F7F2x48bMCgT9zHlRq9PbWDgQwNA51hWWhY+lEmm2fOFtIvO3t94cq2lw43eDlbe0fd6VvRTiaNUvolqtNqx5keN8N1OkscXi5y00W3yHj6eSXIUFpfsS5DM1JaRPpAbyUtK1rDvH+FsI7+3/acPZyL00ila9yUg=
+  - secure: L0QrQsJqyCgSqnBeEJ5D6bg8g27SAA2ZFmqhhH4M0919OrIgsstRByLJFrKG6bkDdENFvcwiJObLOOi0RBg0+QqF7NdL6zWf0njXQC1HjWdKkddENVy1h5DnnOY0fc9cpB7tETKIxB8aBVfQqmqOVfZTLpbOFkce1WRDE5bBlNp4vnhiSseUJpvMCj3oqg5LykCZkaQ7f/vdK+sbTlMuGqymAMF3SksBEXBjnD2LNkJl3JGD/jcoVjdeESClxhi1gWgij3UP7GPtVz/U3QvxI0CJMgr7sM2R8bsEKlu0IrVvWMYvwCNT3f7sodXdNxHzP3v01QmhTlExuwtoywyKFDj5T+z9RHuCeIYER2x5LUnSH90shTW5PKjoKXvHPOqfC0L4tr+YTJ+MDEAqEL5dfMePUsuJ1JL2QeFyJqKfJ5oxf9jPxJNUE2haUrca0FlPv+FUneeLMZvTkqE9eNL0Gaobrjhx+MUZtA7ykAyNMsQGU3H9gju1bb20C92THxs2lqXPCVtK/kIfx2m3Dx0r+Q7ZfOnzQh0I7LqvHV7cOf1ZGJKbd1p7VOjReXCGPEfs/rohgnF1nU3ocaJFlFf+TW9niV0TjZtTLjT7T9OpURGlmrZGe3x/93DxVEZwsglPYv45N2H0pekD1HEwHhLoSHOAqRI0/5Q4irSawJTe3eE=
 services:
 - docker
-
 script:
 - sh docker-build.sh
-
 after_script:
 - docker images;
 - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
 - docker tag "$IMAGE" "$IMAGE:$SNAPSHOT";
 - docker images;
-- if [ "$TRAVIS_BRANCH" == "master" ]; then docker push "$IMAGE:$SNAPSHOT";
-  fi
-
+- if [ "$TRAVIS_BRANCH" == "master" ]; then docker push "$IMAGE:$SNAPSHOT"; fi
 before_deploy:
 - git config --global user.email "builds@travis-ci.com";
 - git config --global user.name "Travis CI";
@@ -31,12 +28,11 @@ before_deploy:
 - docker push "$IMAGE:$GIT_TAG";
 - docker push "$IMAGE";
 - ls -R;
-
 deploy:
   provider: releases
-  api_key: $GITHUB_TOKEN
+  api_key: "$GITHUB_TOKEN"
   file: version
   on:
     tags: false
-    repo: $IMAGE
+    repo: "$IMAGE"
     branch: release
