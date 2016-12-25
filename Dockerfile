@@ -1,10 +1,8 @@
-FROM ctarwater/armhf-alpine-rpi-base
+FROM kacis/docker-rpi-perl-ssl:5.24.0
 
 MAINTAINER Milan Kacalek <kacis.m@gmail.com>
 
-RUN apk add --no-cache perl perl-io-socket-ssl
 RUN mkdir -p /var/cache/ddclient/
-
 
 ADD ddclient /usr/bin/
 ADD run.sh /usr/bin/
